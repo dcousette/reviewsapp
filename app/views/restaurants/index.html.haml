@@ -1,0 +1,8 @@
+.container
+  - @restaurants.each do |restaurant|
+    .restaurant-section
+      = image_tag restaurant.image_url
+      %ul 
+        %li= restaurant.name 
+        %li= restaurant.description
+      

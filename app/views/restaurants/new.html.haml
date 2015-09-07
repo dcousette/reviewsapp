@@ -1,0 +1,9 @@
+.container 
+  .message
+    - if @restaurant.errors.any?
+      .errors_display 
+        - @restaurant.errors.full_messages.each do |msg|
+          %li
+            = msg 
+  
+  = render 'form'

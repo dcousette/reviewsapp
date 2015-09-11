@@ -63,7 +63,7 @@ describe RestaurantsController do
       cafe = Fabricate(:restaurant)
       get :show, id: cafe.id
       expect(assigns(:restaurant)).to eq(cafe)
-    end 
+    end
     
     it "renders the template for the restaurant object" do 
       cafe = Fabricate(:restaurant)

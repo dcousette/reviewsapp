@@ -1,7 +1,27 @@
 .container 
+  %h1 Restaurant Details 
   .restaurant
     = image_tag @restaurant.image_url
     %ul
       %li= @restaurant.name 
       %li= @restaurant.description 
-    
+  
+  %h1 Review this restaurant     
+  .review-form
+    = form_for [@restaurant, @review] do |f|
+      = f.label :rating 
+      = f.select :rating, options_for_select([[1, "Star"], [2, "Stars"]])
+      
+      = f.label :content
+      = f.text_area :content
+      
+      = f.submit 
+  
+  %h1 Reviews
+  .reviews-list 
+    - @restaurant.reviews.each do |review|
+      .review-item
+        // = review.user 
+        = review.rating 
+        = review.content
+          

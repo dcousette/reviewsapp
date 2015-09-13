@@ -3,7 +3,7 @@ require 'rails_helper'
 describe ReviewsController do
   describe "POST create" do 
     context "with valid information" do
-      it "sets up a restaurant object" do 
+      it "sets up a restaurant object" do
         eats = Fabricate(:restaurant)
         post :create, restaurant_id: eats.id, review: Fabricate.attributes_for(:review)
         expect(assigns(:restaurant)).to eq(eats)
@@ -35,10 +35,10 @@ describe ReviewsController do
         expect(Review.all.count).to eq(0)
       end
       
-      it "renders the restaurant page" do 
+      it "redirects to the restaurant page" do 
         eats = Fabricate(:restaurant)
         post :create, restaurant_id: eats.id, review: { rating: 1 }
-        expect(response).to render_template "restaurants/show"
+        expect(response).to redirect_to restaurant_path(eats)
       end
     end
   end

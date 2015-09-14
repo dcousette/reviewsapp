@@ -6,6 +6,7 @@ class ReviewsController < ApplicationController
   def create
     @restaurant = Restaurant.find(params[:restaurant_id])
     @review = @restaurant.reviews.build(review_params)
+    @review.user_id = 1  #this needs to be changed to current_user.id
     
     if @review.save 
       flash[:success] = "Your review has been saved."

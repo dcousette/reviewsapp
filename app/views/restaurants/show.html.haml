@@ -9,7 +9,7 @@
   %h1 Review this restaurant     
   .review-form
     = form_for [@restaurant, @review] do |f|
-      = f.label :rating 
+      = f.label :rating
       = f.select :rating, options_for_select([["1 Star", 1], ["2 Stars", 2], ["3 Stars", 3], ["4 Stars", 4], ["5 Stars", 5]])
       
       = f.label :content

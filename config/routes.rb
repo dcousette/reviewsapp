@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   end
   
   resources :categories 
+  resources :users, only: [ :new, :create, :show ]
 end

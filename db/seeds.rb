@@ -12,3 +12,5 @@ Review.create(rating: 1, content: "This place blows... so disappointed we came h
               
 Review.create(rating: 5, content: "Our favorite fast food spot. Always fresh food here.", 
               restaurant_id: 3, user_id: 1 )              
+
+User.create(username:"dcousette", password:"dcousette")

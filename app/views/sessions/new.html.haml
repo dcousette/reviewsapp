@@ -1,0 +1,11 @@
+.container 
+  .form
+    = form_tag '/login', method: 'post' do
+      = label_tag :username 
+      = text_field_tag :username
+      
+      = label_tag :password
+      = text_field_tag :password
+      
+      = submit_tag "Log in"
+      

@@ -1,0 +1,8 @@
+.container
+  %h1= @category.name + " Restaurants"
+  - @category.restaurants.each do |restaurant|
+    .restaurant-card 
+      %h3= restaurant.name
+      = image_tag restaurant.image_url
+      = restaurant.description
+    

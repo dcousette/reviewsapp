@@ -1,0 +1,4 @@
+.container 
+  - @categories.each do |category|
+    .well.col-md-4  
+      = link_to category.name + " Restaurants", category

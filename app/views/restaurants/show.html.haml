@@ -6,18 +6,20 @@
       %li= @restaurant.name 
       %li= @restaurant.description 
   
-  %h1 Review this restaurant     
-  .review-form
+  %h2 Review this restaurant     
+  .review-form.col-md-8
     = form_for [@restaurant, @review] do |f|
-      = f.label :rating
-      = f.select :rating, options_for_select([["1 Star", 1], ["2 Stars", 2], ["3 Stars", 3], ["4 Stars", 4], ["5 Stars", 5]])
+      .form-group 
+        = f.label :rating
+        = f.select :rating, options_for_select([["1 Star", 1], ["2 Stars", 2], ["3 Stars", 3], ["4 Stars", 4], ["5 Stars", 5]]), 
+                            {}, class: 'form-control'
+      .form-group 
+        = f.label :content
+        = f.text_area :content, class: 'form-control'
       
-      = f.label :content
-      = f.text_area :content
-      
-      = f.submit 
+      = f.submit class: 'btn btn-success'
   
-  %h1 Reviews
+  %h2 Reviews
   .reviews-list 
     - @restaurant.reviews.each do |review|
       .review-item

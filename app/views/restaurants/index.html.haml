@@ -1,7 +1,7 @@
 .container
   - @restaurants.each do |restaurant|
     .restaurant-section
-      = image_tag restaurant.image_url
-      %ul 
-        %li= restaurant.name 
-        %li= restaurant.description
+      .well.col-md-8
+        %h3= link_to restaurant.name, restaurant
+        = image_tag restaurant.image_url
+        %p= link_to restaurant.description, restaurant

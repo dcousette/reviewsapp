@@ -2,6 +2,6 @@
   - @restaurants.each do |restaurant|
     .restaurant-section
       .well.col-md-8
-        %h3= link_to restaurant.name, restaurant  
+        %h3= link_to restaurant.name, restaurant
         = image_tag restaurant.image_url
         %p= link_to restaurant.description, restaurant

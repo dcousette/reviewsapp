@@ -1,29 +1,30 @@
 .container 
-  %h1 Restaurant Details 
-  .restaurant
-    = image_tag @restaurant.image_url
-    %ul
-      %li= @restaurant.name 
-      %li= @restaurant.description 
-  
-  %h2 Review this restaurant     
-  .review-form.col-md-8
-    = form_for [@restaurant, @review] do |f|
-      .form-group 
-        = f.label :rating
-        = f.select :rating, options_for_select([["1 Star", 1], ["2 Stars", 2], ["3 Stars", 3], ["4 Stars", 4], ["5 Stars", 5]]), 
-                            {}, class: 'form-control'
-      .form-group 
-        = f.label :content
-        = f.text_area :content, class: 'form-control'
+  .row.section
+    %h1= @restaurant.name  
+    .restaurant
+      = image_tag @restaurant.image_url
+      %h4= @restaurant.description
       
-      = f.submit class: 'btn btn-success'
+  .row.section
+    %h2= "Write a Review for #{ @restaurant.name }"
+    .review-form.col-md-8
+      = form_for [@restaurant, @review] do |f|
+        .form-group 
+          = f.label :rating
+          = f.select :rating, options_for_select([["1 Star", 1], ["2 Stars", 2], ["3 Stars", 3], ["4 Stars", 4], ["5 Stars", 5]]), 
+                              {}, class: 'form-control'
+        .form-group 
+          = f.label :content
+          = f.text_area :content, class: 'form-control'
+        
+        = f.submit class: 'btn btn-success'
   
-  %h2 Reviews
-  .reviews-list 
-    - @restaurant.reviews.each do |review|
-      .review-item
-        // = review.user 
-        = review.rating 
-        = review.content
-          
+  .row.section 
+    %h2 User Reviews
+    .reviews-list 
+      - @restaurant.reviews.reload.each do |review|
+        %hr 
+          .review-item.row.panel.panel-default
+            %p Review by: #{review.user.username} 
+            %p Rating: #{review.rating.to_s}  
+            %p= review.content

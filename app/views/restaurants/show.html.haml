@@ -21,6 +21,17 @@
             = f.text_area :content, class: 'form-control'
           
           = f.submit class: 'btn btn-success'
+          
+  - else 
+    .row.section 
+      .login-prompt 
+        %h2 
+          Login to write your review - 
+          = link_to "Login", login_path, class: 'btn btn-primary'
+        %h5
+          Not a User?
+          = link_to "Sign up here!", new_user_path 
+        
     
   .row.section 
     %h2 User Reviews

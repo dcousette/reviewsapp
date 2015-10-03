@@ -27,19 +27,20 @@ describe ReviewsController do
         expect(response).to redirect_to restaurant_path(eats) 
       end
       
-      it "does not add a review for a restaurant if the user has already created one" do 
+      it "does not add a review for a restaurant if the user has already created one" do
         me = Fabricate(:user, id: 1 )
+        session[:user_id] = me.id
         yums = Fabricate(:restaurant, id: 1, name: "Yum's")
-        review_too = Fabricate(:review, user: me, restaurant: yums)
-        post :create, restaurant_id: yums.id, review: { rating: 4, content: "Not bad!", user_id: 1 }
-        expect(Review.all.count).to eq(1)
+        yums.reviews << Fabricate(:review, user: me, content: "The only game in town.")
+        post :create, restaurant_id: yums.id, review: { rating: 4, content: "Not bad!" }
+        expect(yums.reviews.count).to eq(1)
       end
     end
     
     context "with invalid information" do  
       it "does not add a review to the database" do 
         post :create, restaurant_id: eats.id, review: { rating: 1 }
-        expect(Review.all.count).to eq(0)
+        expect(Review.count).to eq(0)
       end
       
       it "redirects to the restaurant page" do 

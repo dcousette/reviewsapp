@@ -8,14 +8,10 @@ class ReviewsController < ApplicationController
     @review = @restaurant.reviews.build(review_params) 
     @review.user_id = current_user.id
     
-    # if @restaurant.reviews.reload.select {|review| review[:user_id] == current_user.id }
-    #   #does the restaurant have a review by the current user?
-      
-      
-    #   flash[:danger] = "Yo%li= link_to "Login", login_pathu can only write one review"
-    #   redirect_to restaurant_path(@restaurant)
-    
-    if @review.save
+    if @restaurant.reviews.reload.any? {|review| review[:user_id] == current_user.id }
+      flash[:danger] = "You can only write one review"
+      redirect_to restaurant_path(@restaurant)
+    elsif @review.save
       flash[:success] = "Your review has been saved."
       redirect_to restaurant_path(@restaurant)
     else 
@@ -26,6 +22,6 @@ class ReviewsController < ApplicationController
   private 
   
   def review_params
-    params.require(:review).permit(:rating, :content, :restaurant_id)
+    params.require(:review).permit(:rating, :content)
   end
 end

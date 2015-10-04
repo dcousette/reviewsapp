@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
     @review = @restaurant.reviews.build(review_params) 
     @review.user_id = current_user.id
     
-    if @restaurant.reviews.reload.any? {|review| review[:user_id] == current_user.id }
+    if @restaurant.review_exists_already?(current_user)
       flash[:danger] = "You can only write one review"
       redirect_to restaurant_path(@restaurant)
     elsif @review.save

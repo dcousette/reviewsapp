@@ -1,5 +1,7 @@
 .container
-  %h1= @category.name + " Restaurants"
+  .page-header
+    %h1 
+      = @category.name + " Restaurants"
   - @category.restaurants.each do |restaurant|
     .restaurant-card 
       = link_to restaurant do 

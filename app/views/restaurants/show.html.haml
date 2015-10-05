@@ -1,30 +1,56 @@
 .container 
+  .errors
+    = render 'shared/errors', obj: @review
+    
   .row.section
-    %h1= @restaurant.name  
+    .page-header
+      %h1 
+        = @restaurant.name
     .restaurant
       = image_tag @restaurant.image_url
       %h4= @restaurant.description
-
-  .row.section
-    %h2= "Write a Review for #{ @restaurant.name }"
-    .review-form.col-md-8
-      = form_for [@restaurant, @review] do |f|
-        .form-group 
-          = f.label :rating
-          = f.select :rating, options_for_select([["1 Star", 1], ["2 Stars", 2], ["3 Stars", 3], ["4 Stars", 4], ["5 Stars", 5]]), 
-                              {}, class: 'form-control'
-        .form-group 
-          = f.label :content
-          = f.text_area :content, class: 'form-control'
-        
-        = f.submit class: 'btn btn-success'
   
+  - if logged_in? && review_exists_already?(@restaurant, current_user)
+    .row.section 
+      .review.well.col-md-8
+        %h2 You've reviewed this location already! Hooray!
+      
+  - elsif logged_in?
+    .row.section
+      %h2 Write a Review for #{ @restaurant.name }
+      .review-form.col-md-8
+        = form_for [@restaurant, @review] do |f|
+          .form-group 
+            = f.label :rating
+            = f.select :rating, options_for_select([["1 Star", 1], ["2 Stars", 2], ["3 Stars", 3], ["4 Stars", 4], ["5 Stars", 5]]), 
+                                {}, class: 'form-control'
+          .form-group 
+            = f.label :content
+            = f.text_area :content, class: 'form-control'
+          
+          = f.submit class: 'btn btn-success'
+      
+  - else 
+    .row.section 
+      .login-prompt 
+        %h2 
+          Login to write your review - 
+          = link_to "Login", login_path, class: 'btn btn-primary'
+        %h5
+          Not a User?
+          = link_to "Sign up here!", new_user_path 
+        
+    
   .row.section 
     %h2 User Reviews
     .reviews-list 
       - @restaurant.reviews.reload.each do |review|
         %hr 
           .review-item.row.panel.panel-default
-            %p Review by: #{review.user.username} 
+            %p 
+              Review by: 
+              = link_to review.user.username, user_path(review.user) 
             %p Rating: #{review.rating.to_s}  
             %p= review.content
+            %p= clean_date_format(review)
+        

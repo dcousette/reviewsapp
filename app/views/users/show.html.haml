@@ -1,3 +1,15 @@
 .container
-  %h3= @user.username
+  .page-header
+    %h3 #{@user.username}'s Recent Reviews
+    
+  .review-list
+    - @user.reviews.each do |review|
+      .review-item.row.panel.panel-default
+        %p= review.restaurant.name 
+        %p
+          Rating: 
+          = review.rating 
+        %p= review.content 
+        %p= clean_date_format(review)
+  
   

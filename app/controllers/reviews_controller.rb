@@ -10,12 +10,12 @@ class ReviewsController < ApplicationController
     
     if @restaurant.review_exists_already?(current_user)
       flash[:danger] = "You can only write one review"
-      redirect_to restaurant_path(@restaurant)
+      render 'restaurants/show'
     elsif @review.save
       flash[:success] = "Your review has been saved."
       redirect_to restaurant_path(@restaurant)
     else 
-      redirect_to restaurant_path(@restaurant)
+      render 'restaurants/show'
     end
   end
   

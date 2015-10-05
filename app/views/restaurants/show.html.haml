@@ -10,7 +10,12 @@
       = image_tag @restaurant.image_url
       %h4= @restaurant.description
   
-  - if logged_in?
+  - if logged_in? && @restaurant.review_exists_already?(current_user)
+    .row.section 
+      .review.well.col-md-8
+        %h2 You've reviewed this location already! Hooray!
+      
+  - elsif logged_in?
     .row.section
       %h2 Write a Review for #{ @restaurant.name }
       .review-form.col-md-8
@@ -24,7 +29,7 @@
             = f.text_area :content, class: 'form-control'
           
           = f.submit class: 'btn btn-success'
-          
+      
   - else 
     .row.section 
       .login-prompt 

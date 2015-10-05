@@ -43,9 +43,9 @@ describe ReviewsController do
         expect(Review.count).to eq(0)
       end
       
-      it "redirects to the restaurant page" do 
+      it "renders the restaurant show template" do 
         post :create, restaurant_id: eats.id, review: { rating: 1 }
-        expect(response).to redirect_to restaurant_path(eats)
+        expect(response).to render_template :show 
       end
     end
   end

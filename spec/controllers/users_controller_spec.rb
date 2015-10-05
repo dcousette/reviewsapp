@@ -17,6 +17,12 @@ describe UsersController do
         post :create, user: Fabricate.attributes_for(:user)
         expect(flash[:success]).to eq("User created successfully")
       end
+      
+      it "places the new user in the session" do
+        session[:user_id] = nil 
+        post :create, user: Fabricate.attributes_for(:user)
+        expect(session[:user_id]).to be_truthy 
+      end
     end
     
     context "with invalid information" do 

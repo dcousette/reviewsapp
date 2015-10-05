@@ -2,7 +2,9 @@ require 'rails_helper'
 
 describe RestaurantsController do
   describe "GET new" do 
-    it "renders the new restaurant template" do 
+    before { session[:user_id] = Fabricate(:user).id }
+
+    it "renders the new restaurant template" do
       get :new 
       expect(response).to render_template :new  
     end
@@ -16,22 +18,32 @@ describe RestaurantsController do
   describe "POST create" do
     context "with valid information" do 
       it "adds a restaurant to the database" do 
+        session[:user_id] = Fabricate(:user).id 
         post :create, restaurant: Fabricate.attributes_for(:restaurant, category_id: 1)
         expect(Restaurant.all.count).to eq(1)
       end
       
       it "redirects to the restaurant index path" do 
+        session[:user_id] = Fabricate(:user).id
         post :create, restaurant: Fabricate.attributes_for(:restaurant, category_id: 1)
         expect(response).to redirect_to restaurants_path
       end
       
       it "displays a success message" do 
+        session[:user_id] = Fabricate(:user).id
         post :create, restaurant: Fabricate.attributes_for(:restaurant, category_id: 1)
         expect(flash[:success]).to eq("Your restaurant has been created!")
-      end 
+      end
+      
+      it "does not create a restaurant if the user is not logged in" do 
+        post :create, restaurant: Fabricate.attributes_for(:restaurant, category_id: 1)
+        expect(Restaurant.count).to eq(0)
+      end
     end
     
     context "with invalid information" do 
+      before { session[:user_id] = Fabricate(:user).id }
+      
       it "does not add a restaurant to the database" do 
         post :create, restaurant: { description: "Truck stop food at its best!" , category_id: 1 }
         expect(Restaurant.all.count).to eq(0)
@@ -73,6 +85,8 @@ describe RestaurantsController do
   end 
   
   describe "GET edit" do 
+    before { session[:user_id] = Fabricate(:user).id }
+    
     it "sets up a restaurant object" do 
       cafe = Fabricate(:restaurant)
       get :edit, id: cafe.id 

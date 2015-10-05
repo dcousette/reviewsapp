@@ -12,4 +12,15 @@ class ApplicationController < ActionController::Base
   def logged_in?
     !!current_user
   end
+  
+  def review_exists_already?(restaurant, user)
+    restaurant.reviews.reload.any? {|review| review[:user_id] == user.id }
+  end
+  
+  def require_login
+    if !logged_in?
+      flash[:danger] = "Please sign in first"
+      redirect_to login_path
+    end
+  end
 end

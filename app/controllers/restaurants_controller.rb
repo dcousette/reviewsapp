@@ -1,4 +1,6 @@
 class RestaurantsController < ApplicationController
+  before_action :require_login, only: [:new, :create, :edit]
+  
   def index 
     @restaurants = Restaurant.all     
   end

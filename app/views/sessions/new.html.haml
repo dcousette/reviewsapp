@@ -1,13 +1,18 @@
-.container 
+.container
   %h3 Enter your login details 
-  .form.col-md-4
-    = form_tag '/login', method: 'post' do
-      .form-group
-        = label_tag :username 
-        = text_field_tag :username, nil, class: 'form-control'
-      
-      .form-group  
-        = label_tag :password
-        = text_field_tag :password, nil, class: 'form-control'
+  .form.row 
+    .col-md-4
+      = form_tag '/login', method: 'post' do
+        .form-group
+          = label_tag :username 
+          = text_field_tag :username, nil, class: 'form-control'
         
-      = submit_tag "Log in", class: 'btn btn-success'
+        .form-group  
+          = label_tag :password
+          = text_field_tag :password, nil, class: 'form-control'
+          
+        = submit_tag "Log in", class: 'btn btn-success'
+    
+  .signup.row
+    %br 
+    = link_to "New User? Signup here", new_user_path

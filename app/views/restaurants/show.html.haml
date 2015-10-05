@@ -10,7 +10,7 @@
       = image_tag @restaurant.image_url
       %h4= @restaurant.description
   
-  - if logged_in? && @restaurant.review_exists_already?(current_user)
+  - if logged_in? && review_exists_already?(@restaurant, current_user)
     .row.section 
       .review.well.col-md-8
         %h2 You've reviewed this location already! Hooray!
@@ -47,6 +47,10 @@
       - @restaurant.reviews.reload.each do |review|
         %hr 
           .review-item.row.panel.panel-default
-            %p Review by: #{review.user.username} 
+            %p 
+              Review by: 
+              = link_to review.user.username, user_path(review.user) 
             %p Rating: #{review.rating.to_s}  
             %p= review.content
+            %p= clean_date_format(review)
+        

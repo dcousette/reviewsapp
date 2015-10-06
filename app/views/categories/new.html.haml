@@ -1,4 +1,7 @@
 .container 
+  = render 'shared/errors', obj: @category 
+  
+  %h3 Create a new category
   .form.col-md-4
     = form_for @category do |f|
       .form-group 

@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id 
       redirect_to restaurants_path
     else 
+      flash[:danger] = "Incorrect Username or Password!"
       render :new 
     end
   end

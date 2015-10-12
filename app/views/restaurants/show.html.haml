@@ -6,6 +6,9 @@
     .page-header
       %h1 
         = @restaurant.name
+        - if logged_in?
+          = link_to "Edit restaurant", edit_restaurant_path(@restaurant), class: 'btn btn-success pull-right'
+          
     .restaurant
       = image_tag @restaurant.image_url
       %h4= @restaurant.description
@@ -22,8 +25,8 @@
         = form_for [@restaurant, @review] do |f|
           .form-group 
             = f.label :rating
-            = f.select :rating, options_for_select([["1 Star", 1], ["2 Stars", 2], ["3 Stars", 3], ["4 Stars", 4], ["5 Stars", 5]]), 
-                                {}, class: 'form-control'
+            = f.select :rating, options_for_select(rating_options), {}, class: 'form-control'
+            
           .form-group 
             = f.label :content
             = f.text_area :content, class: 'form-control'
@@ -39,8 +42,7 @@
         %h5
           Not a User?
           = link_to "Sign up here!", new_user_path 
-        
-    
+  
   .row.section 
     %h2 User Reviews
     .reviews-list 
@@ -53,4 +55,3 @@
             %p Rating: #{review.rating.to_s}  
             %p= review.content
             %p= clean_date_format(review)
-        

@@ -4,6 +4,9 @@
       Restaurants Ratings!
       %small 
         \- A place to share your reviews
+      - if logged_in?
+        = link_to "Add a restaurant", new_restaurant_path, class: 'btn btn-success pull-right'
+    
   - @restaurants.each do |restaurant|
     .restaurant-section
       = link_to restaurant do 

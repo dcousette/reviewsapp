@@ -4,9 +4,12 @@
       Restaurant Categories
       %small 
         \- Choose one
+      - if logged_in?
+        = link_to "Add a category", new_category_path, class: 'btn btn-success pull-right'
+      
   .category-list
     %ul 
       - @categories.each do |category|
         %li
           = link_to category do 
-            %h3= category.name + " Restaurants"
+            %h3= category.name

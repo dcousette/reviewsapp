@@ -1,57 +1,57 @@
-.container 
+.container
   .errors
     = render 'shared/errors', obj: @review
-    
+
   .row.section
     .page-header
-      %h1 
+      %h1
         = @restaurant.name
         - if logged_in?
           = link_to "Edit restaurant", edit_restaurant_path(@restaurant), class: 'btn btn-success pull-right'
-          
+
     .restaurant
-      = image_tag @restaurant.image_url
+      = image_tag @restaurant.image.url(:large)
       %h4= @restaurant.description
-  
+
   - if logged_in? && review_exists_already?(@restaurant, current_user)
-    .row.section 
+    .row.section
       .review.well.col-md-8
         %h2 You've reviewed this location already! Hooray!
-      
+
   - elsif logged_in?
     .row.section
       %h2 Write a Review for #{ @restaurant.name }
       .review-form.col-md-8
         = form_for [@restaurant, @review] do |f|
-          .form-group 
+          .form-group
             = f.label :rating
             = f.select :rating, options_for_select(rating_options), {}, class: 'form-control'
-            
-          .form-group 
+
+          .form-group
             = f.label :content
             = f.text_area :content, class: 'form-control'
-          
+
           = f.submit class: 'btn btn-success'
-      
-  - else 
-    .row.section 
-      .login-prompt 
-        %h2 
-          Login to write your review - 
+
+  - else
+    .row.section
+      .login-prompt
+        %h2
+          Login to write your review -
           = link_to "Login", login_path, class: 'btn btn-primary'
         %h5
           Not a User?
-          = link_to "Sign up here!", new_user_path 
-  
-  .row.section 
+          = link_to "Sign up here!", new_user_path
+
+  .row.section
     %h2 User Reviews
-    .reviews-list 
+    .reviews-list
       - @restaurant.reviews.reload.each do |review|
-        %hr 
+        %hr
           .review-item.row.panel.panel-default
-            %p 
-              Review by: 
-              = link_to review.user.username, user_path(review.user) 
-            %p Rating: #{review.rating.to_s}  
+            %p
+              Review by:
+              = link_to review.user.username, user_path(review.user)
+            %p Rating: #{review.rating.to_s}
             %p= review.content
             %p= clean_date_format(review)

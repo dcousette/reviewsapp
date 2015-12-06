@@ -1,4 +1,4 @@
-class Category < ActiveRecord::Base 
+class Category < ActiveRecord::Base
   has_many :restaurants
-  validates :name, presence: true, uniqueness: true  
+  validates :name, presence: true, uniqueness: true 
 end

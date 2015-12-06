@@ -17,6 +17,7 @@ gem 'haml'
 gem 'pry'
 gem 'bcrypt', '~> 3.1.10'
 gem 'rails_12factor', group: :production
+gem 'paperclip', "~> 4.3"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -28,9 +29,9 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
-group :test do 
+group :test do
   gem 'shoulda-matchers'
   gem 'fabrication'
   gem 'faker'
   gem 'capybara'
-end 
+end

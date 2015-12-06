@@ -13,4 +13,4 @@
         = link_to restaurant do
           .well.well-sm
             %h5= restaurant.name
-            = image_tag restaurant.image_url
+            = image_tag restaurant.image.url(:medium)

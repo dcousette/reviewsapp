@@ -18,16 +18,11 @@ describe CategoriesController do
   end
 
   describe "GET show" do
-    it "sets up a category object" do
-      fast_food = Fabricate(:category, name: "Fast Food", slug: "Fast-Food")
-      get :show, id: fast_food.id
+    it "sets up @category object" do
+      fast_food = Fabricate(:category, name: "Fast Food", slug: "fast-food")
+      slow_food = Fabricate(:category)
+      get :show, id: fast_food.slug
       expect(assigns(:category)).to eq(fast_food)
-    end
-
-    it "renders the template for the category" do
-      fast_food = Fabricate(:category, name: "Fast Food", slug: "Fast-Food")
-      get :show, id: fast_food.id
-      expect(response).to render_template :show
     end
   end
 

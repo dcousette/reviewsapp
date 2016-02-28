@@ -1,4 +1,5 @@
-class Category < ActiveRecord::Base 
+class Category < ActiveRecord::Base
+  include Sluggable
   has_many :restaurants
-  validates :name, presence: true, uniqueness: true  
+  validates :name, :slug, presence: true, uniqueness: true
 end

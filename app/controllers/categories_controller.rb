@@ -1,29 +1,29 @@
-class CategoriesController < ApplicationController 
-  def index 
-    @categories = Category.all 
+class CategoriesController < ApplicationController
+  def index
+    @categories = Category.all
+  end
+
+  def show
+    @category = Category.find_by(slug: params[:id])
   end
   
-  def show 
-    @category = Category.find(params[:id])
+  def new
+    @category = Category.new
   end
-  
-  def new 
-    @category = Category.new 
-  end 
-  
+
   def create
     @category = Category.create(category_params)
-    
-    if @category.save 
+
+    if @category.save
       flash[:success] = "Your category was created successfully."
       redirect_to categories_path
-    else 
-      render :new 
+    else
+      render :new
     end
   end
-  
-  private 
-  
+
+  private
+
   def category_params
     params.require(:category).permit(:name)
   end

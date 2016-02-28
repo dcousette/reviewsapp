@@ -1,5 +1,6 @@
 class RestaurantsController < ApplicationController
   before_action :require_login, only: [:new, :create, :edit]
+  before_action :setup_restaurant, only: [:show, :edit, :update]
 
   def index
     @restaurants = Restaurant.all
@@ -20,16 +21,13 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant.find(params[:id])
     @review = @restaurant.reviews.build
   end
 
   def edit
-    @restaurant = Restaurant.find(params[:id])
   end
 
   def update
-    @restaurant = Restaurant.find(params[:id])
     @restaurant.update(restaurant_params)
 
     if @restaurant.save
@@ -40,6 +38,10 @@ class RestaurantsController < ApplicationController
   end
 
   private
+
+  def setup_restaurant
+    @restaurant = Restaurant.find_by(slug: params[:id])
+  end
 
   def restaurant_params
     params.require(:restaurant).permit(:name, :description, :category_id, :image_url, :image)

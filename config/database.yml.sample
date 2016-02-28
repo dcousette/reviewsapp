@@ -1,26 +1,30 @@
 development:
   adapter: postgresql
-  encoding: unicode
+  encoding: unicode 
   database: reviews_app_development
   host: localhost
-  pool: 5
+  pool: 5 
   username: dcousette
-  password:
-
+  password: niven
+  template: template0
+  
 test:
   adapter: postgresql
-  encoding: unicode
+  encoding: unicode 
   database: reviews_app_test
   host: localhost
-  pool: 5
+  pool: 5 
   username: dcousette
-  password:
-
+  password: niven
+  template: template0
+  
 production:
   adapter: postgresql
   encoding: unicode 
   database: reviews_app
   host: localhost
-  pool: 10
+  pool: 5 
   username: dcousette
-  password:
+  password: niven
+  template: template0
+
